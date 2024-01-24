@@ -18,7 +18,7 @@ def make_url(time):
 concat_dim = ConcatDim("time", dates, nitems_per_file=1)
 pattern = FilePattern(make_url, concat_dim)
 
-compressor = zarr.Blosc(cname="zstd", clevel=3, shuffle=2)
+compressor = zarr.Blosc(cname="zstd", clevel=3)
 encoding = {"time": {"compressor": compressor}}
 
 recipe = (
