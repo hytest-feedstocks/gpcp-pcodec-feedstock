@@ -41,7 +41,7 @@ recipe = (
     | StoreToZarr(
         store_name="gpcp-pcodec",
         combine_dims=pattern.combine_dim_keys,
-        encoding={"time": {"compressor": Pcodec()}
+        encoding={"time": {"compressor": Pcodec()}}
     )
 )
 
