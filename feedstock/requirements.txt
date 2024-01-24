@@ -1,4 +1,4 @@
-pangeo-forge-recipes==0.10.3
+pangeo-forge-recipes @ git+https://github.com/thodson-usgs/pangeo-forge-recipes@add-custom-compression
 s3fs
 numcodecs
 pcodec
