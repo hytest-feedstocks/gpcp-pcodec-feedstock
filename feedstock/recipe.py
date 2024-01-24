@@ -32,7 +32,10 @@ def make_url(time):
 
 concat_dim = ConcatDim("time", dates, nitems_per_file=1)
 pattern = FilePattern(make_url, concat_dim)
-encoding={"time": {"compressor": Pcodec()}}
+#encoding={"time": {"compressor": Pcodec()}}
+import zarr
+compressor = zarr.Blosc(cname="zstd", clevel=3, shuffle=2)
+encoding={"time": {"compressor": compressor}}
 
 recipe = (
     beam.Create(pattern.items())
