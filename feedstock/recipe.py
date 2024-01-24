@@ -31,5 +31,3 @@ recipe = (
         to_zarr_kwargs={"encoding": encoding}
     )
 )
-
-#zarr.Blosc(cname="zstd", clevel=3, shuffle=2) # Pcodec
