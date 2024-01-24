@@ -1,5 +1,6 @@
 import apache_beam as beam
 import pandas as pd
+import zarr
 
 from pangeo_forge_recipes.patterns import ConcatDim, FilePattern
 from pangeo_forge_recipes.transforms import OpenURLWithFSSpec, OpenWithXarray, StoreToZarr
@@ -17,7 +18,6 @@ def make_url(time):
 concat_dim = ConcatDim("time", dates, nitems_per_file=1)
 pattern = FilePattern(make_url, concat_dim)
 
-import zarr
 compressor = zarr.Blosc(cname="zstd", clevel=3, shuffle=2)
 encoding = {"time": {"compressor": compressor}}
 
