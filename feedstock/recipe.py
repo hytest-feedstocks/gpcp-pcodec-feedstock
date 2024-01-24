@@ -32,7 +32,7 @@ def make_url(time):
 
 concat_dim = ConcatDim("time", dates, nitems_per_file=1)
 pattern = FilePattern(make_url, concat_dim)
-
+encoding={"time": {"compressor": Pcodec()}}
 
 recipe = (
     beam.Create(pattern.items())
@@ -41,7 +41,7 @@ recipe = (
     | StoreToZarr(
         store_name="gpcp-pcodec",
         combine_dims=pattern.combine_dim_keys,
-        encoding={"time": {"compressor": Pcodec()}}
+        to_zarr_kwargs={"encoding": encoding}
     )
 )
 
