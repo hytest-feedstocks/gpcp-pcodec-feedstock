@@ -18,9 +18,8 @@ class Pcodec(Codec):
 
 import zarr
 # TEST compression
-# compressor = Pcodec()
-zarr.storage.default_compressor = zarr.Blosc(cname="zstd", clevel=3, shuffle=2) # Pcodec
-
+#zarr.storage.default_compressor = zarr.Blosc(cname="zstd", clevel=3, shuffle=2) # Pcodec
+zarr.storage.default_compressor = Pcodec()
 
 from pangeo_forge_recipes.patterns import ConcatDim, FilePattern
 from pangeo_forge_recipes.transforms import OpenURLWithFSSpec, OpenWithXarray, StoreToZarr
