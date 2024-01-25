@@ -28,6 +28,6 @@ recipe = (
     | StoreToZarr(
         store_name="gpcp-pcodec",
         combine_dims=pattern.combine_dim_keys,
-        to_zarr_kwargs={"encoding": encoding}
+        encoding=encoding,
     )
 )
