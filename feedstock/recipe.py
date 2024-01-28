@@ -14,12 +14,6 @@ class Pcodec(Codec):
 
     def decode(self, buf):
         return auto_decompress(buf)
-        
-
-import zarr
-# TEST compression
-#zarr.storage.default_compressor = zarr.Blosc(cname="zstd", clevel=3, shuffle=2) # Pcodec
-zarr.storage.default_compressor = Pcodec()
 
 from pangeo_forge_recipes.patterns import ConcatDim, FilePattern
 from pangeo_forge_recipes.transforms import OpenURLWithFSSpec, OpenWithXarray, StoreToZarr
@@ -37,6 +31,8 @@ def make_url(time):
 concat_dim = ConcatDim("time", dates, nitems_per_file=1)
 pattern = FilePattern(make_url, concat_dim)
 
+compressor = Pcodec()
+encoding = {"precip": {"compressor": compressor}}
 
 recipe = (
     beam.Create(pattern.items())
@@ -45,5 +41,6 @@ recipe = (
     | StoreToZarr(
         store_name="gpcp-pcodec",
         combine_dims=pattern.combine_dim_keys,
+        encoding=encoding,
     )
 )
