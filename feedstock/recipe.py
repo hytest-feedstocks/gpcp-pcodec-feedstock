@@ -21,7 +21,7 @@ pattern = FilePattern(make_url, concat_dim)
 from numcodecs import Blosc, Delta
 compressor = zarr.Blosc(cname="zstd", clevel=3)
 #compressor = Blosc(cname="zstd", clevel=3)
-filters = [Delta('i4')]
+filters = [Delta('i2')]
 
 encoding = {"precip": {"compressor": compressor, "filters": filters}}
 
