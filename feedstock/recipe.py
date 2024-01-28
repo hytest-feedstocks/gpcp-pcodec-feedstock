@@ -19,7 +19,8 @@ concat_dim = ConcatDim("time", dates, nitems_per_file=1)
 pattern = FilePattern(make_url, concat_dim)
 
 compressor = zarr.Blosc(cname="zstd", clevel=3)
-encoding = {"precip": {"compressor": compressor}}
+compressor2 = zarr.Blosc(cname="zstd", clevel=4)
+encoding = {"precip": {"compressor": [compressor, compressor]}}
 
 recipe = (
     beam.Create(pattern.items())
