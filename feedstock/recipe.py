@@ -18,10 +18,10 @@ def make_url(time):
 concat_dim = ConcatDim("time", dates, nitems_per_file=1)
 pattern = FilePattern(make_url, concat_dim)
 
-from numcodecs import Blosc, Delta
+from numcodecs import Blosc, Delta, BitRound
 compressor = zarr.Blosc(cname="zstd", clevel=3)
 #compressor = Blosc(cname="zstd", clevel=3)
-filters = [Delta('i2')]
+filters = [BitRound(3)]
 
 encoding = {"precip": {"compressor": compressor, "filters": filters}}
 
