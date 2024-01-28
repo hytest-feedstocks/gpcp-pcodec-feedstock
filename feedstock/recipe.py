@@ -21,10 +21,9 @@ pattern = FilePattern(make_url, concat_dim)
 from numcodecs import Blosc, Delta
 compressor = zarr.Blosc(cname="zstd", clevel=3)
 #compressor = Blosc(cname="zstd", clevel=3)
-filters = [Delta()]
-filters = None
+filters = [Delta('f8')]
 
-encoding = {"precip": {"compressor": compressor}} #"filters": filters}}
+encoding = {"precip": {"compressor": compressor, "filters": filters}}
 
 recipe = (
     beam.Create(pattern.items())
