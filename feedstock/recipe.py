@@ -18,9 +18,11 @@ def make_url(time):
 concat_dim = ConcatDim("time", dates, nitems_per_file=1)
 pattern = FilePattern(make_url, concat_dim)
 
-compressor = zarr.Blosc(cname="zstd", clevel=3)
-compressor2 = zarr.Blosc(cname="zstd", clevel=4)
-encoding = {"precip": {"compressor": [compressor, compressor]}}
+from numcodecs import Blosc, Delta
+compressor = Blosc(cname="zstd", clevel=3)
+filters = [Delta()]
+
+encoding = {"precip": {"compressor": compressor, "filters": filters}}
 
 recipe = (
     beam.Create(pattern.items())
